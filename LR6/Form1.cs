@@ -179,7 +179,25 @@ namespace LR6
                 }
 
             }
-            
+            public override void Save(StreamWriter file)
+            {
+                file.WriteLine("Circle");
+                file.WriteLine(x);
+                file.WriteLine(y);
+                file.WriteLine(r);                
+                file.WriteLine(color.ToKnownColor());
+            }
+            public override void Load(StreamReader file)
+            {
+                x = Convert.ToInt32(file.ReadLine());
+                y = Convert.ToInt32(file.ReadLine());
+                r = Convert.ToInt32(file.ReadLine());                
+                color = Color.FromName(file.ReadLine());
+            }
+            public override string Name()
+            {
+                return "Circle";
+            }
 
         }
 
@@ -283,6 +301,25 @@ namespace LR6
                         brush.Color = Color.Red;
                         break;
                 }
+            }
+            public override void Save(StreamWriter file)
+            {
+                file.WriteLine("Square");
+                file.WriteLine(x);
+                file.WriteLine(y);
+                file.WriteLine(r);                
+                file.WriteLine(color.ToKnownColor());
+            }
+            public override void Load(StreamReader file)
+            {
+                x = Convert.ToInt32(file.ReadLine());
+                y = Convert.ToInt32(file.ReadLine());
+                r = Convert.ToInt32(file.ReadLine());                
+                color = Color.FromName(file.ReadLine());
+            }
+            public override string Name()
+            {
+                return "Square";
             }
         }
 
