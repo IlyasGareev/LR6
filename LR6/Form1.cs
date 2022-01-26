@@ -15,7 +15,9 @@ namespace LR6
         public Form1()
         {
             InitializeComponent();
-            
+            this.KeyPreview = true;
+            this.KeyDown += Form1_KeyDown;
+            storage.observers += new System.EventHandler(this.UpdateFromStorage);
         }
         class Figure   //базовый класс
         {
@@ -48,7 +50,30 @@ namespace LR6
             virtual public void ChangeColor(int color)
             {
             }
-            
+
+
+
+            virtual public void Save(StreamWriter file)
+            {
+            }
+            virtual public void Load(StreamReader file)
+            {
+            }
+            virtual public string Name()
+            {
+                return "Figure";
+            }
+            virtual public int getCount()
+            {
+                return 1;
+            }
+            virtual public Figure getObject(int i)
+            {
+                Figure a = new Figure();
+                return a;
+            }
+
+            public int x, y, r;
 
         }
 
