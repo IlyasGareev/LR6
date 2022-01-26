@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 namespace LR6
 {
     public partial class Form1 : Form
@@ -15,9 +15,12 @@ namespace LR6
         public Form1()
         {
             InitializeComponent();
+            
         }
         class Figure   //базовый класс
         {
+            protected Color color = Color.White;
+            public bool Sticky = false;
 
             virtual public bool isClicked(MouseEventArgs e)
             {
@@ -45,27 +48,27 @@ namespace LR6
             virtual public void ChangeColor(int color)
             {
             }
+            
+
         }
 
         class CCircle : Figure   //класс круга
         {
-            private int x;
-            private int y;
-            private int rad;
+           
             private bool Checked;
             private Pen pen;
             private SolidBrush brush;
-            public CCircle(int x, int y, int rad)
+            public CCircle(int x, int y, int r)
             {
                 this.x = x;
                 this.y = y;
-                this.rad = rad;
+                this.r = r;
                 Checked = false;
                 brush = new SolidBrush(Color.White);
             }
             override public bool isClicked(MouseEventArgs e)
             {
-                if (((e.X - x) * (e.X - x) + (e.Y - y) * (e.Y - y)) <= rad * rad)
+                if (((e.X - x) * (e.X - x) + (e.Y - y) * (e.Y - y)) <= r * r)
                 {
                     return true;
                 }
@@ -76,7 +79,7 @@ namespace LR6
             }
             public override void Draw(Panel panel1, Graphics g)
             {
-                Rectangle rect = new Rectangle(x - rad, y - rad, rad * 2, rad * 2);
+                Rectangle rect = new Rectangle(x - r, y - r, r * 2, r * 2);
                 if (Checked == true)
                 {
                     pen = new Pen(Color.Tomato);
@@ -101,34 +104,37 @@ namespace LR6
             {
                 return Checked;
             }
-            public override void Move(KeyEventArgs e)
+            
+
+            override public void Move(KeyEventArgs e)
             {
-                if (e.KeyValue == 38)
+                if (e.KeyCode == Keys.A)
                 {
-                    y = y - 10;
+                    x = x - 5;
                 }
-                if (e.KeyValue == 40)
+                if (e.KeyCode == Keys.D)
                 {
-                    y = y + 10;
+                    x = x + 5;
                 }
-                if (e.KeyValue == 39)
+                if (e.KeyCode == Keys.W)
                 {
-                    x = x + 10;
+                    y = y - 5;
                 }
-                if (e.KeyValue == 37)
+                if (e.KeyCode == Keys.S)
                 {
-                    x = x - 10;
+                    y = y + 5;
                 }
             }
+
             public override void ChangeSize(KeyEventArgs e)
             {
                 if (e.KeyValue == 187)
                 {
-                    rad = rad + 5;
+                    r = r + 5;
                 }
                 if (e.KeyValue == 189)
                 {
-                    rad = rad - 5;
+                    r = r - 5;
                 }
             }
             public override void ChangeColor(int color)
@@ -137,6 +143,7 @@ namespace LR6
                 {
                     case 1:
                         brush.Color = Color.Black;
+                        
                         break;
                     case 2:
                         brush.Color = Color.Blue;
@@ -147,26 +154,28 @@ namespace LR6
                 }
 
             }
+            
+
         }
 
         class Square : Figure    //класс квадрата 
         {
             private int x;
             private int y;
-            private int rad;
+            private int r;
             private bool Checked;
             private SolidBrush brush;
-            public Square(int x, int y, int rad)
+            public Square(int x, int y, int r)
             {
                 this.x = x;
                 this.y = y;
-                this.rad = rad;
+                this.r = r;
                 Checked = false;
                 brush = new SolidBrush(Color.White);
             }
             override public bool isClicked(MouseEventArgs e)
             {
-                if (((e.X - x) * (e.X - x) + (e.Y - y) * (e.Y - y)) <= rad * rad * 2)
+                if (((e.X - x) * (e.X - x) + (e.Y - y) * (e.Y - y)) <= r * r * 2)
                 {
                     return true;
                 }
@@ -177,7 +186,7 @@ namespace LR6
             }
             public override void Draw(Panel panel1, Graphics g)
             {
-                Rectangle rect = new Rectangle(x - rad, y - rad, rad * 2, rad * 2);
+                Rectangle rect = new Rectangle(x - r, y - r, r * 2, r * 2);
                 if (Checked == true)
                 {
                     g.FillRectangle(brush, rect);
@@ -189,6 +198,28 @@ namespace LR6
                     g.DrawRectangle(Pens.Black, rect);
                 }
             }
+            
+            override public void Move(KeyEventArgs e)
+            {
+                if (e.KeyCode == Keys.A)
+                {
+                    x = x - 5;
+                }
+                if (e.KeyCode == Keys.D)
+                {
+                    x = x + 5;
+                }
+                if (e.KeyCode == Keys.W)
+                {
+                    y = y - 5;
+                }
+                if (e.KeyCode == Keys.S)
+                {
+                    y = y + 5;
+                }
+            }
+           
+
             override public void DoCheckTrue()
             {
                 Checked = true;
@@ -201,34 +232,16 @@ namespace LR6
             {
                 return Checked;
             }
-            public override void Move(KeyEventArgs e)
-            {
-                if (e.KeyValue == 38)
-                {
-                    y = y - 10;
-                }
-                if (e.KeyValue == 40)
-                {
-                    y = y + 10;
-                }
-                if (e.KeyValue == 39)
-                {
-                    x = x + 10;
-                }
-                if (e.KeyValue == 37)
-                {
-                    x = x - 10;
-                }
-            }
+            
             public override void ChangeSize(KeyEventArgs e)
             {
                 if (e.KeyValue == 187)
                 {
-                    rad = rad + 5;
+                    r = r + 5;
                 }
                 if (e.KeyValue == 189)
                 {
-                    rad = rad - 5;
+                    r = r - 5;
                 }
             }
             public override void ChangeColor(int color)
@@ -370,11 +383,13 @@ namespace LR6
                 }
             }
         }
+        
 
         class MyStorage
         {
             private int size;
-            Figure[] storage;
+            public Figure[] storage;
+            public System.EventHandler observers;
             public MyStorage()
             {
                 size = 0;
@@ -413,6 +428,15 @@ namespace LR6
                 size = size - 1;
                 storage = new_storage;
             }
+            public void MakeCheckedbyIndex(int i)
+            {
+                storage[i].DoCheckTrue();
+            }
+            public void MakenotCheckedbyIndex(int i)
+            {
+                storage[i].DoCheckFalse();
+            }
+
             public bool isCheckedStorage(MouseEventArgs e)
             {
                 for (int i = 0; i < size; i++)
@@ -450,16 +474,8 @@ namespace LR6
                     storage[i].Draw(panel1, g);
                 }
             }
-            public void Move(KeyEventArgs e)
-            {
-                for (int i = 0; i < size; i++)
-                {
-                    if (storage[i].isChecked() == true)
-                    {
-                        storage[i].Move(e);
-                    }
-                }
-            }
+            
+
             public void ChangeSize(KeyEventArgs e)
             {
                 for (int i = 0; i < size; i++)
@@ -480,9 +496,41 @@ namespace LR6
                     }
                 }
             }
+            public Figure getObject(int i)
+            {
+                return storage[i];
+            }
+
+            
+
+
+            public void deleteGroup()
+            {
+                for (int i = size - 1; i >= 0; i--)
+                {
+                    if (storage[i] is CGroup && storage[i].isChecked())
+                    {
+                        CGroup group = (CGroup)storage[i];
+                        for (int j = group.getCount() - 1; j >= 0; j--)
+                        {
+                            AddObject(group._figires[j]);
+                        }
+                        DeleteObject(i);
+                    }
+                }
+            }
+
+            
+
+            
+
         }
 
-        MyStorage storage = new MyStorage();
+        
+
+
+
+    MyStorage storage = new MyStorage();
         int figure;
         int color;
 
@@ -529,6 +577,7 @@ namespace LR6
                     }
                 }
             }
+            storage.observers.Invoke(this, null);
             Refresh();
         }
 
@@ -540,7 +589,7 @@ namespace LR6
                 storage.DeleteCheckObject(storage);
                 g.Clear(Color.White);
             }
-            if (e.KeyValue == 38 || e.KeyValue == 40 || e.KeyValue == 39 || e.KeyValue == 37)
+            if (e.KeyCode == Keys.W || e.KeyCode == Keys.S || e.KeyCode == Keys.D || e.KeyCode == Keys.A)
             {
                 g.Clear(Color.White);
                 storage.Move(e);
@@ -581,6 +630,54 @@ namespace LR6
         private void pbRed_Click(object sender, EventArgs e)
         {
             color = 3;
+        }
+        
+       
+
+        private void btn_ungroop_Click(object sender, EventArgs e)
+        {
+            storage.deleteGroup();
+            storage.observers.Invoke(this, null);
+
+        }
+
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btn_load_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        private void btn_sticky_Click(object sender, EventArgs e)
+        {
+            
+        }
+        
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            foreach (TreeNode n in treeView1.Nodes)
+            {
+                if (n.Checked)
+                {
+                    storage.MakeCheckedbyIndex(n.Index);
+                }
+                else
+                {
+                    storage.MakenotCheckedbyIndex(n.Index);
+                }
+            }
+            Refresh();
+
+        }
+
+        private void btn_groop_Click(object sender, EventArgs e)
+        {
+            storage.createGroup();
+            storage.observers.Invoke(this, null);
         }
     }
 }
