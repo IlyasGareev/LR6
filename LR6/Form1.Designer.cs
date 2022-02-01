@@ -31,7 +31,6 @@ namespace LR6
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_sticky = new System.Windows.Forms.Button();
             this.btn_load = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_ungroop = new System.Windows.Forms.Button();
@@ -43,7 +42,6 @@ namespace LR6
             this.pbBlue = new System.Windows.Forms.PictureBox();
             this.pbBlack = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTriangle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCircle)).BeginInit();
@@ -51,13 +49,11 @@ namespace LR6
             ((System.ComponentModel.ISupportInitialize)(this.pbRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBlack)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btn_sticky);
             this.panel1.Controls.Add(this.btn_load);
             this.panel1.Controls.Add(this.btn_save);
             this.panel1.Controls.Add(this.btn_ungroop);
@@ -72,16 +68,6 @@ namespace LR6
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1583, 106);
             this.panel1.TabIndex = 0;
-            // 
-            // btn_sticky
-            // 
-            this.btn_sticky.Location = new System.Drawing.Point(1047, 28);
-            this.btn_sticky.Name = "btn_sticky";
-            this.btn_sticky.Size = new System.Drawing.Size(91, 23);
-            this.btn_sticky.TabIndex = 11;
-            this.btn_sticky.Text = "Липкость";
-            this.btn_sticky.UseVisualStyleBackColor = true;
-            this.btn_sticky.Click += new System.EventHandler(this.btn_sticky_Click);
             // 
             // btn_load
             // 
@@ -191,22 +177,12 @@ namespace LR6
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Window;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.treeView1);
             this.panel2.Location = new System.Drawing.Point(1, 112);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1582, 521);
             this.panel2.TabIndex = 1;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
-            // 
-            // treeView1
-            // 
-            this.treeView1.CheckBoxes = true;
-            this.treeView1.Location = new System.Drawing.Point(3, 25);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(121, 97);
-            this.treeView1.TabIndex = 16;
-            this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             // 
             // Form1
             // 
@@ -225,7 +201,6 @@ namespace LR6
             ((System.ComponentModel.ISupportInitialize)(this.pbRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBlue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBlack)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -240,12 +215,10 @@ namespace LR6
         private System.Windows.Forms.PictureBox pbBlue;
         private System.Windows.Forms.PictureBox pbBlack;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btn_sticky;
         private System.Windows.Forms.Button btn_load;
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Button btn_ungroop;
         private System.Windows.Forms.Button btn_groop;
-        private System.Windows.Forms.TreeView treeView1;
     }
 }
 
