@@ -64,14 +64,11 @@ namespace LR6
                 Figure a = new Figure();
                 return a;
             }
-
             public int x, y, r;
-
         }
 
         class CCircle : Figure   //класс круга
         {
-
             private bool Checked;
             private Pen pen;
             private SolidBrush brush;
@@ -108,7 +105,6 @@ namespace LR6
                 brush.Color = color;
                 g.FillEllipse(brush, rect);
                 g.DrawEllipse(pen, rect);
-
             }
             override public void DoCheckTrue()
             {
@@ -175,7 +171,7 @@ namespace LR6
             }
             public override void Save(StreamWriter file)
             {
-                file.WriteLine("C");
+                file.WriteLine("CCircle");
                 file.WriteLine(x);
                 file.WriteLine(y);
                 file.WriteLine(r);                
@@ -251,7 +247,7 @@ namespace LR6
             }
             public override void Save(StreamWriter file)
             {
-                file.WriteLine("S");
+                file.WriteLine("Square");
                 file.WriteLine(x);
                 file.WriteLine(y);
                 file.WriteLine(r);                
@@ -330,7 +326,7 @@ namespace LR6
             }
             override public bool isClicked(MouseEventArgs e)
             {
-                if (e.X >= x - r / && e.Y >= y - r  && e.X <= x + r  && e.Y <= y + r )
+                if (e.X >= x - r && e.Y >= y - r  && e.X <= x + r  && e.Y <= y + r )
                 {
                     return true;
                 }
@@ -434,7 +430,7 @@ namespace LR6
             }
             public override void Save(StreamWriter file)
             {
-                file.WriteLine("T");
+                file.WriteLine("Triangle");
                 file.WriteLine(p[0].X);
                 file.WriteLine(p[0].Y);
                 file.WriteLine(p[1].X);
@@ -462,21 +458,21 @@ namespace LR6
         }
         class Factory
         {
-            public Figure createShape(char name)
+            public Figure createShape(string name)
             {
                 Figure obj = null;
                 switch (name)
                 {
-                    case "C":
+                    case "CCircle":
                         obj = new CCircle(0, 0, 0);
                         break;
-                    case "S":
+                    case "Square":
                         obj = new Square(0, 0, 0);
                         break;
-                    case "G":
+                    case "CGroup":
                         obj = new CGroup(0);
                         break;
-                    case 'T':
+                    case "Triangle":
                         obj = new Triangle(0, 0, 0);
                         break;
                     default:
@@ -670,10 +666,10 @@ namespace LR6
                 Factory factory = new Factory();
                 StreamReader file = new StreamReader(way);
                 int count = Convert.ToInt32(file.ReadLine());
-                char name;
+                string name;
                 for (int i = 0; i < count; i++)
                 {
-                    name = Convert.ToChar(file.ReadLine());
+                    name = Convert.ToString(file.ReadLine());
                     AddObject(factory.createShape(name));
                     if (storage[i] != null)
                     {
@@ -702,7 +698,6 @@ namespace LR6
                 Checked = true;
                 _maxcount = maxcount; _count = 0;
                 _figures = new Figure[_maxcount];
-
             }
             ~CGroup()
             {
@@ -804,7 +799,7 @@ namespace LR6
 
             public override void Save(StreamWriter file)
             {
-                file.WriteLine("G");
+                file.WriteLine("CGroup");
                 file.WriteLine(_count);
                 for (int i = 0; i < _count; i++)
                 {
@@ -816,24 +811,18 @@ namespace LR6
             {
                 _maxcount = Convert.ToInt32(file.ReadLine());
                 _count = 0;
-                char name;
+                string name;
                 Factory factory = new Factory();
                 _figures = new Figure[_maxcount];
                 for (int i = 0; i < _maxcount; i++)
                 {
-                    name = Convert.ToChar(file.ReadLine());
+                    name = Convert.ToString(file.ReadLine());
                     addShape(factory.createShape(name));
                     _figures[i].Load(file);
                 }
             }
             
-
-
         }
-
-
-
-
 
         MyStorage storage = new MyStorage();
         int figure;
