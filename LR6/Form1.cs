@@ -170,7 +170,7 @@ namespace LR6
 
             }
             public override void Save(StreamWriter file)
-            {
+            {                
                 file.WriteLine("CCircle");
                 file.WriteLine(x);
                 file.WriteLine(y);
@@ -326,7 +326,10 @@ namespace LR6
             }
             override public bool isClicked(MouseEventArgs e)
             {
-                if (e.X >= x - r && e.Y >= y - r  && e.X <= x + r  && e.Y <= y + r )
+                int a = (p[0].X - e.X) * (p[1].Y - p[0].Y) - (p[1].X - p[0].X) * (p[0].Y - e.Y);
+                int b = (p[1].X - e.X) * (p[2].Y - p[1].Y) - (p[2].X - p[1].X) * (p[1].Y - e.Y);
+                int c = (p[2].X - e.X) * (p[0].Y - p[2].Y) - (p[0].X - p[2].X) * (p[2].Y - e.Y);
+                if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
                 {
                     return true;
                 }
@@ -523,23 +526,19 @@ namespace LR6
                 }
                 size = size - 1;
                 storage = new_storage;
-            }
-            public void MakeCheckedbyIndex(int i)
-            {
-                storage[i].DoCheckTrue();
-            }
-            public void MakenotCheckedbyIndex(int i)
-            {
-                storage[i].DoCheckFalse();
-            }
-
+            }            
             public bool isCheckedStorage(MouseEventArgs e)
             {
+                int k = 0;
                 for (int i = 0; i < size; i++)
                 {
                     if (storage[i].isClicked(e) == true)
                     {
                         storage[i].DoCheckTrue();
+                        k++;
+                    }
+                    if (i == size - 1 && k != 0)                        // для выделения нескольких фигур, если они заходят друг на друга               
+                    {
                         return true;
                     }
                 }
@@ -621,11 +620,11 @@ namespace LR6
                     {
                         if (storage[i].isChecked() == true)
                         {
-                            group.addShape(storage[i]);          // изъятие из хранилища и помещение в специальный объект класса Group
+                            group.addShape(storage[i]);           
                             DeleteObject(i);
                         }
                     }
-                    AddObject(group);                            // удаляем элемент 652 и сохраняем группу в хранилище (методичка)
+                    AddObject(group);                            
                 }
 
             }
@@ -635,24 +634,23 @@ namespace LR6
             {
                 for (int i = size - 1; i >= 0; i--)
                 {
-                    if (storage[i] is CGroup && storage[i].isChecked())
+                    if (storage[i] is CGroup && storage[i].isChecked())     
                     {
                         CGroup group = (CGroup)storage[i];
                         for (int j = group.getCount() - 1; j >= 0; j--)
                         {
-                            AddObject(group._figures[j]);
+                            AddObject(group._figures[j]);                 
                         }
-                        DeleteObject(i);
+                        DeleteObject(i);                                  
                     }
                 }
             }
 
             public void saveAll()
             {
-                string way = @"save.txt";
+                string way = @"D:\угат\2\ООП\LR6\LR6\bin\Debug\save.txt";
                 StreamWriter file = new StreamWriter(way, false);
                 file.WriteLine(size);
-
                 for (int i = 0; i < size; i++)
                 {
                     storage[i].Save(file);
@@ -662,15 +660,15 @@ namespace LR6
 
             public void loadAll()
             {
-                string way = @"save.txt";
+                string way = @"D:\угат\2\ООП\LR6\LR6\bin\Debug\save.txt";
                 Factory factory = new Factory();
                 StreamReader file = new StreamReader(way);
                 int count = Convert.ToInt32(file.ReadLine());
                 string name;
                 for (int i = 0; i < count; i++)
-                {
-                    name = Convert.ToString(file.ReadLine());
-                    AddObject(factory.createShape(name));
+                {                    
+                    name = file.ReadLine();
+                    AddObject(factory.createShape(name));                 
                     if (storage[i] != null)
                     {
                         storage[i].Load(file);
@@ -678,10 +676,7 @@ namespace LR6
                 }
                 file.Close();
             }                       
-            public int getCount()
-            {
-                return size;
-            }
+            
 
         }
 
@@ -699,15 +694,7 @@ namespace LR6
                 _maxcount = maxcount; _count = 0;
                 _figures = new Figure[_maxcount];
             }
-            ~CGroup()
-            {
-                for (int i = 0; i < _maxcount; ++i)
-                {
-                    _figures = null;
-                }
-                _figures = null;
-            }
-
+            
             public bool addShape(Figure obj)
             {
                 if (_count >= _maxcount)
@@ -875,21 +862,17 @@ namespace LR6
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            Graphics g = panel1.CreateGraphics();
+        {            
             if (e.KeyValue == 46)
             {
-                storage.DeleteCheckObject(storage);
-                g.Clear(Color.White);
+                storage.DeleteCheckObject(storage);               
             }
             if (e.KeyCode == Keys.W || e.KeyCode == Keys.S || e.KeyCode == Keys.D || e.KeyCode == Keys.A)
             {
-                g.Clear(Color.White);
                 storage.Move(e);
             }
             if (e.KeyValue == 187 || e.KeyValue == 189)
-            {
-                g.Clear(Color.White);
+            {               
                 storage.ChangeSize(e);
             }
             Refresh();
