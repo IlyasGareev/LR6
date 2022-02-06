@@ -16,8 +16,7 @@ namespace LR6
         {
             InitializeComponent();
             this.KeyPreview = true;
-            this.KeyDown += Form1_KeyDown;
-            
+            this.KeyDown += Form1_KeyDown;            
         }
         class Figure   //базовый класс
         {
@@ -95,8 +94,8 @@ namespace LR6
             {
                 Rectangle rect = new Rectangle(x - r, y - r, r * 2, r * 2);
                 if (Checked == true)
-                {
-                    pen = new Pen(Color.Tomato);
+                {                    
+                    pen = new Pen(Color.Yellow, 4);
                 }
                 else
                 {
@@ -154,16 +153,13 @@ namespace LR6
             {
                 switch (col)
                 {
-                    case 1:
-                        brush.Color = Color.Black;
+                    case 1:                        
                         color = Color.Black;
                         break;
-                    case 2:
-                        brush.Color = Color.Blue;
+                    case 2:                        
                         color = Color.Blue;
                         break;
-                    case 3:
-                        brush.Color = Color.Red;
+                    case 3:                        
                         color = Color.Red;
                         break;
                 }
@@ -191,6 +187,7 @@ namespace LR6
         {            
             private bool Checked;
             private SolidBrush brush;
+            private Pen pen;
             public Square(int x, int y, int r)
             {
                 this.x = x;
@@ -217,7 +214,8 @@ namespace LR6
                 {
                     brush.Color = color;
                     g.FillRectangle(brush, rect);
-                    g.DrawRectangle(Pens.Tomato, rect);
+                    pen = new Pen(Color.Yellow, 4);
+                    g.DrawRectangle(pen, rect);                    
                 }
                 else
                 {
@@ -288,16 +286,13 @@ namespace LR6
             {
                 switch (col)
                 {
-                    case 1:
-                        brush.Color = Color.Black;
+                    case 1:                        
                         color = Color.Black;
                         break;
-                    case 2:
-                        brush.Color = Color.Blue;
+                    case 2:                        
                         color = Color.Blue;
                         break;
-                    case 3:
-                        brush.Color = Color.Red;
+                    case 3:                        
                         color = Color.Red;
                         break;
                 }
@@ -309,6 +304,7 @@ namespace LR6
             private Point[] p;
             private bool Checked;           
             private SolidBrush brush;
+            private Pen pen;
             public Triangle(int x, int y, int r)
             {
                 p = new Point[3];
@@ -344,7 +340,8 @@ namespace LR6
                 {
                     brush.Color = color;
                     g.FillPolygon(brush, p);
-                    g.DrawPolygon(Pens.Tomato, p);
+                    pen = new Pen(Color.Yellow, 4);
+                    g.DrawPolygon(pen, p);
                 }
                 else
                 {
@@ -417,16 +414,13 @@ namespace LR6
             {
                 switch (col)
                 {
-                    case 1:
-                        brush.Color = Color.Black;
+                    case 1:                        
                         color = Color.Black;
                         break;
-                    case 2:
-                        brush.Color = Color.Blue;
+                    case 2:                        
                         color = Color.Blue;
                         break;
                     case 3:
-                        brush.Color = Color.Red;
                         color = Color.Red;
                         break;
                 }
@@ -747,7 +741,6 @@ namespace LR6
             }
 
 
-
             public override bool isClicked(MouseEventArgs e)
             {
                 for (int i = 0; i < _count; i++)
@@ -852,10 +845,10 @@ namespace LR6
                 {
                     storage.NotChecked();
                     storage.isCheckedStorage(e);
-                    if (col == 1 || col == 2 || col == 3)
-                    {
-                        storage.ChangeColor(col);
-                    }
+                    //if (col == 1 || col == 2 || col == 3)
+                    //{
+                    //    storage.ChangeColor(col);
+                    //}
                 }
             }            
             Refresh();
@@ -930,6 +923,14 @@ namespace LR6
         {
             storage.createGroup();            
         }
-        
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (col == 1 || col == 2 || col == 3)
+            {
+                storage.ChangeColor(col);
+            }
+            Refresh();
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace LR6
             this.pbBlue = new System.Windows.Forms.PictureBox();
             this.pbBlack = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnColor = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTriangle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCircle)).BeginInit();
@@ -54,6 +55,7 @@ namespace LR6
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnColor);
             this.panel1.Controls.Add(this.btn_load);
             this.panel1.Controls.Add(this.btn_save);
             this.panel1.Controls.Add(this.btn_ungroop);
@@ -184,6 +186,16 @@ namespace LR6
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
             // 
+            // btnColor
+            // 
+            this.btnColor.Location = new System.Drawing.Point(77, 68);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(108, 23);
+            this.btnColor.TabIndex = 2;
+            this.btnColor.Text = "Изменить цвет";
+            this.btnColor.UseVisualStyleBackColor = true;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,6 +231,7 @@ namespace LR6
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Button btn_ungroop;
         private System.Windows.Forms.Button btn_groop;
+        private System.Windows.Forms.Button btnColor;
     }
 }
 
