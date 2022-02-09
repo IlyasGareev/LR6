@@ -57,12 +57,7 @@ namespace LR6
             virtual public int getCount()
             {
                 return 1;
-            }
-            virtual public Figure getObject(int i)
-            {
-                Figure a = new Figure();
-                return a;
-            }
+            }            
             public int x, y, r;
         }
 
@@ -212,17 +207,16 @@ namespace LR6
                 Rectangle rect = new Rectangle(x - r, y - r, r * 2, r * 2);
                 if (Checked == true)
                 {
-                    brush.Color = color;
-                    g.FillRectangle(brush, rect);
                     pen = new Pen(Color.Yellow, 4);
-                    g.DrawRectangle(pen, rect);                    
                 }
                 else
                 {
-                    brush.Color = color;
-                    g.FillRectangle(brush, rect);
-                    g.DrawRectangle(Pens.Black, rect);
+                    pen = new Pen(Color.Black);
                 }
+                brush.Color = color;
+                g.FillRectangle(brush, rect);
+                g.DrawRectangle(pen, rect);
+                
             }            
             override public void Move(KeyEventArgs e)
             {
@@ -338,17 +332,16 @@ namespace LR6
             {
                 if (Checked == true)
                 {
-                    brush.Color = color;
-                    g.FillPolygon(brush, p);
                     pen = new Pen(Color.Yellow, 4);
-                    g.DrawPolygon(pen, p);
                 }
                 else
                 {
-                    brush.Color = color;
-                    g.FillPolygon(brush, p);
-                    g.DrawPolygon(Pens.Black, p);
+                    pen = new Pen(Color.Black);
                 }
+                brush.Color = color;               
+                g.FillPolygon(brush, p);
+                g.DrawPolygon(pen, p);
+                
             }
             override public void DoCheckTrue()
             {
@@ -594,11 +587,7 @@ namespace LR6
                     }
                 }
             }
-            public Figure getObject(int i)
-            {
-                return storage[i];
-            }
-
+            
             public void createGroup()
             {
                 int count = 0;
@@ -642,7 +631,7 @@ namespace LR6
 
             public void saveAll()
             {
-                string way = @"D:\угат\2\ООП\LR6\LR6\bin\Debug\save.txt";
+                string way = @"save.txt";
                 StreamWriter file = new StreamWriter(way, false);
                 file.WriteLine(size);
                 for (int i = 0; i < size; i++)
@@ -654,7 +643,7 @@ namespace LR6
 
             public void loadAll()
             {
-                string way = @"D:\угат\2\ООП\LR6\LR6\bin\Debug\save.txt";
+                string way = @"save.txt";
                 Factory factory = new Factory();
                 StreamReader file = new StreamReader(way);
                 int count = Convert.ToInt32(file.ReadLine());
@@ -690,10 +679,7 @@ namespace LR6
             }
             
             public bool addShape(Figure obj)
-            {
-                if (_count >= _maxcount)
-                    return false;
-
+            {                
                 _count++;
                 _figures[_count - 1] = obj;
                 return true;
@@ -770,12 +756,7 @@ namespace LR6
             public override int getCount()
             {
                 return _count;
-            }
-
-            public override Figure getObject(int i)
-            {
-                return _figures[i];
-            }
+            }                    
 
             public override void Save(StreamWriter file)
             {
@@ -796,7 +777,7 @@ namespace LR6
                 _figures = new Figure[_maxcount];
                 for (int i = 0; i < _maxcount; i++)
                 {
-                    name = Convert.ToString(file.ReadLine());
+                    name = file.ReadLine();
                     addShape(factory.createShape(name));
                     _figures[i].Load(file);
                 }
@@ -844,11 +825,7 @@ namespace LR6
                 else
                 {
                     storage.NotChecked();
-                    storage.isCheckedStorage(e);
-                    //if (col == 1 || col == 2 || col == 3)
-                    //{
-                    //    storage.ChangeColor(col);
-                    //}
+                    storage.isCheckedStorage(e);                    
                 }
             }            
             Refresh();
@@ -900,8 +877,7 @@ namespace LR6
         {
             col = 3;
         }
-        
-       
+              
 
         private void btn_ungroop_Click(object sender, EventArgs e)
         {
