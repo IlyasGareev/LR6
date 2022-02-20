@@ -631,7 +631,7 @@ namespace LR6
 
             public void saveAll()
             {
-                string way = @"save.txt";
+                string way = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save.txt";
                 StreamWriter file = new StreamWriter(way, false);
                 file.WriteLine(size);
                 for (int i = 0; i < size; i++)
@@ -643,7 +643,7 @@ namespace LR6
 
             public void loadAll()
             {
-                string way = @"save.txt";
+                string way = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save.txt";
                 Factory factory = new Factory();
                 StreamReader file = new StreamReader(way);
                 int count = Convert.ToInt32(file.ReadLine());
@@ -883,10 +883,93 @@ namespace LR6
         {
             storage.deleteGroup();            
         }
+        Random rnd = new Random();
+        private int GetRandomCheck()
+        {
+            //Создание объекта для генерации чисел (с указанием начального значения)
+            
 
+            //Получить случайное число 
+            int value = rnd.Next(2, 5);
+
+            //Вернуть полученное значение
+            return value;
+        }
+
+        private int GetRandomItem()
+        {
+            //Создание объекта для генерации чисел (с указанием начального значения)
+
+
+            //Получить случайное число 
+            int value = rnd.Next(1, 5);
+
+            //Вернуть полученное значение
+            return value;
+        }
+        private string GetName()
+        {
+            string name = "";
+            int rand = GetRandomItem();
+            switch (rand)
+            {
+                case 1:
+                    name = "Мыло";
+                    break;
+                case 2:
+                    name = "Посуда";
+                    break;
+                case 3:
+                    name = "Велик";
+                    break;
+                case 4:
+                    name = "Коньки";
+                    break;
+                case 5:
+                    name = "Самокат";
+                    break;
+                default:
+                    break;
+            }
+
+            return name;
+        }
         private void btn_save_Click(object sender, EventArgs e)
         {
-            storage.saveAll();
+            //storage.saveAll();
+            string way = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save.txt";
+            StreamWriter file = new StreamWriter(way, false);
+            file.WriteLine("ID	ITEM");
+            //int rand = GetRandom();
+            int ran = 50000;
+            int k = 0;
+            string[] a = new string[5000] ;            
+            while(k <= 5000)
+            {
+                int rand = GetRandomCheck();
+                for (int i = 0; i < rand; i++)
+                {
+                    file.Write("so");
+                    file.Write(ran);
+                    file.Write("     ");                    
+                    a[i] = GetName();
+                    if (i == 0)
+                    {
+                        file.WriteLine(a[i]);
+                    }
+                    else for (int j = 0; j < i; j++)
+                        {
+                            if (a[i] != a[j])
+                            {
+                                file.WriteLine(a[i]);
+                            }
+                        }
+                    k++;
+                }
+                ran = ran + 4;                
+            }
+
+            file.Close();
         }
 
         private void btn_load_Click(object sender, EventArgs e)
