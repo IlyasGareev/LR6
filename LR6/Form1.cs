@@ -884,13 +884,17 @@ namespace LR6
             storage.deleteGroup();            
         }
         Random rnd = new Random();
+
+
+        //-----------------------------------------------------
+
         private int GetRandomCheck()
         {
             //Создание объекта для генерации чисел (с указанием начального значения)
             
 
             //Получить случайное число 
-            int value = rnd.Next(2, 5);
+            int value = rnd.Next(4, 8);
 
             //Вернуть полученное значение
             return value;
@@ -902,7 +906,7 @@ namespace LR6
 
 
             //Получить случайное число 
-            int value = rnd.Next(1, 5);
+            int value = rnd.Next(1, 16);
 
             //Вернуть полученное значение
             return value;
@@ -914,19 +918,52 @@ namespace LR6
             switch (rand)
             {
                 case 1:
-                    name = "Мыло";
+                    name = "Куртка";
                     break;
                 case 2:
-                    name = "Посуда";
+                    name = "Толстовка";
                     break;
                 case 3:
-                    name = "Велик";
+                    name = "Брюки";
                     break;
                 case 4:
-                    name = "Коньки";
+                    name = "Футболка";
                     break;
                 case 5:
-                    name = "Самокат";
+                    name = "Ботинки";
+                    break;
+                case 6:
+                    name = "Шлепанцы";
+                    break;
+                case 7:
+                    name = "Шапка";
+                    break;
+                case 8:
+                    name = "Перчатки";
+                    break;
+                case 9:
+                    name = "Сумка";
+                    break;
+                case 10:
+                    name = "Носки";
+                    break;
+                case 11:
+                    name = "Горные лыжи";
+                    break;
+                case 12:
+                    name = "Беговые лыжи";
+                    break;
+                case 13:
+                    name = "Беговая дорожка";
+                    break;
+                case 14:
+                    name = "Фитнес аксессуары";
+                    break;
+                case 15:
+                    name = "Кроссовки";
+                    break;
+                case 16:
+                    name = "Термобелье";
                     break;
                 default:
                     break;
@@ -937,41 +974,59 @@ namespace LR6
         private void btn_save_Click(object sender, EventArgs e)
         {
             //storage.saveAll();
-            string way = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save.txt";
-            StreamWriter file = new StreamWriter(way, false);
+            string way = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save2.txt";
+            StreamWriter file = new StreamWriter(way, false, System.Text.Encoding.GetEncoding(1251));
+
             file.WriteLine("ID	ITEM");
             //int rand = GetRandom();
             int ran = 50000;
             int k = 0;
-            string[] a = new string[5000] ;            
-            while(k <= 5000)
-            {
+           
+            bool alreadyThere;
+            while (k <= 5000)
+            {               
                 int rand = GetRandomCheck();
+                string[] a = new string[rand];
                 for (int i = 0; i < rand; i++)
                 {
-                    file.Write("so");
-                    file.Write(ran);
-                    file.Write("     ");                    
-                    a[i] = GetName();
-                    if (i == 0)
+
+                    alreadyThere = false;                                       
+                    string newRanomValue = GetName();
+                    for (int j = 0; j < i; j++)
                     {
-                        file.WriteLine(a[i]);
-                    }
-                    else for (int j = 0; j < i; j++)
+                        if (a[j] == newRanomValue)
                         {
-                            if (a[i] != a[j])
-                            {
-                                file.WriteLine(a[i]);
-                            }
+                            alreadyThere = true;
+                            break;
                         }
+                    }
+
+                    if (!alreadyThere)
+                    {
+                        a[i] = newRanomValue;                        
+                        i++;                        
+                    }
+                                      
                     k++;
                 }
+                for (int l = 0; l < rand; l++)
+                {
+                    if (a[l] != null) {
+                    file.Write("so");
+                    file.Write(ran);
+                    file.Write("\t");
+                    file.WriteLine(a[l]);                    
+                    }
+                }
+                
                 ran = ran + 4;                
             }
 
             file.Close();
         }
 
+
+        // ----------------------------------------------------
         private void btn_load_Click(object sender, EventArgs e)
         {
             storage.loadAll();            
