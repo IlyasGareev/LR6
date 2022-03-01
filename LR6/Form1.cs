@@ -975,15 +975,18 @@ namespace LR6
         {
             //storage.saveAll();
             string way = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save2.txt";
+            string way1 = @"D:\угат\2\3 СЕМ\ООП\LR6\LR6\bin\Debug\save3.txt";
             StreamWriter file = new StreamWriter(way, false, System.Text.Encoding.GetEncoding(1251));
+            StreamWriter file1 = new StreamWriter(way1, false); // utf
 
-            file.WriteLine("ID	ITEM");
+            file.WriteLine("ID;ITEM");
+            file1.WriteLine("ID;ITEM");
             //int rand = GetRandom();
             int ran = 50000;
             int k = 0;
            
             bool alreadyThere;
-            while (k <= 5000)
+            while (k <= 6500)
             {               
                 int rand = GetRandomCheck();
                 string[] a = new string[rand];
@@ -1012,10 +1015,14 @@ namespace LR6
                 for (int l = 0; l < rand; l++)
                 {
                     if (a[l] != null) {
-                    file.Write("so");
+                    file.Write("SO");
                     file.Write(ran);
-                    file.Write("\t");
-                    file.WriteLine(a[l]);                    
+                    file.Write(";");
+                    file.WriteLine(a[l]);
+                        file1.Write("SO");
+                        file1.Write(ran);
+                        file1.Write(";");
+                        file1.WriteLine(a[l]);
                     }
                 }
                 
